@@ -2,7 +2,6 @@ import os
 import sys
 import geojson
 from shapely.geometry import shape, box, mapping
-from shapely.ops import clip_by_rect
 
 def process_geojson(input_dir, output_dir, bounding_box):
     # Ensure output directory exists
@@ -21,37 +20,42 @@ def process_geojson(input_dir, output_dir, bounding_box):
             with open(input_path, 'r') as infile:
                 data = geojson.load(infile)
             
-            # Filter and clip features based on the bounding box
+            # List to store features and features to prepend
             filtered_features = []
+            features_to_prepend = []
+
             for feature in data['features']:
                 geom = shape(feature['geometry'])
                 
                 if geom.is_empty:
                     continue
                 
-                # If it's a Point with specific properties, always retain it
-                if geom.type == 'Point':
-                    # Add condition for retaining specific points here
-                    # Example: if feature['properties'].get('retain', False):
-                    #     filtered_features.append(feature)
-                    filtered_features.append(feature)
-                    continue
+                # Check if the feature is a Point and has the specified properties
+                if geom.geom_type == 'Point':
+                    properties = feature.get('properties', {})
+                    if any(properties.get(key) for key in ["isLineDefaults", "isSymbolDefaults", "isTextDefaults"]):
+                        features_to_prepend.append(feature)
+                        continue
+                    # If it doesn't have those properties, check if it is within the bounding box
+                    if bbox.contains(geom):
+                        filtered_features.append(feature)
+                        continue
                 
-                # Clip the geometry to the bounding box
+                # Clip the geometry to the bounding box for other types
                 clipped_geom = geom.intersection(bbox)
                 
                 if not clipped_geom.is_empty:
-                    # Update the geometry in the feature with the clipped geometry
                     feature['geometry'] = mapping(clipped_geom)
                     filtered_features.append(feature)
             
-            # Save the filtered and clipped GeoJSON
-            data['features'] = filtered_features
+            # Prepend the special features to the filtered list
+            data['features'] = features_to_prepend + filtered_features
+            
+            # Save the filtered and clipped GeoJSON without pretty-printing
             with open(output_path, 'w') as outfile:
-                geojson.dump(data, outfile, indent=2)
+                geojson.dump(data, outfile)
 
 if __name__ == "__main__":
-    # Example usage: python CRC_VideoMap_Bounding.py input_dir output_dir bounding_coords
     if len(sys.argv) != 4:
         print("Usage: python CRC_VideoMap_Bounding.py <input_dir> <output_dir> <bounding_coords>")
         sys.exit(1)
