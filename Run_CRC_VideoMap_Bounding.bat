@@ -70,8 +70,31 @@ if %errorlevel% neq 0 (
     echo                             WARNING
     echo                            ---------
     echo.
-    echo Python is required to run this script and I could not find it.
+    echo Python 3.0 or higher is required to run this script and I could not find it.
     echo Press any key to launch the website to download it from and install it.
+    echo.
+    echo Be sure to install it to "PATH" when prompted.
+    echo.
+    echo Once complete, launch this batch file again.
+    pause>nul
+    start https://www.python.org/downloads/
+    exit /b
+)
+
+rem Check if Python version is 3.0 or higher
+for /f "tokens=2 delims= " %%a in ('python --version') do set version=%%a
+for /f "tokens=1 delims=." %%b in ("%version%") do set major=%%b
+if %major% lss 3 (
+    cls
+    echo.
+    echo.
+    echo                            ---------
+    echo                             WARNING
+    echo                            ---------
+    echo.
+    echo Python 3.0 or higher is required to run this script.
+    echo You currently have Python %version% installed.
+    echo Press any key to launch the website to download a compatible version.
     echo.
     echo Be sure to install it to "PATH" when prompted.
     echo.
