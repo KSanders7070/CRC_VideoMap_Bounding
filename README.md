@@ -21,7 +21,7 @@ pip install geojson shapely
 
 ### Batch File
 
-1. Download the `Run_CRC_VideoMap_Bounding.bat` file and the `CRC_VideoMap_Bounding.py` file and make sure they are in the same folder as each other.
+1. Download the [Run_CRC_VideoMap_Bounding.bat](https://github.com/KSanders7070/CRC_VideoMap_Bounding/releases/latest/download/Run_CRC_VideoMap_Bounding.bat) file and the [CRC_VideoMap_Bounding.py](https://github.com/KSanders7070/CRC_VideoMap_Bounding/releases/latest/download/CRC_VideoMap_Bounding.py) file and make sure they are in the same folder as each other.
 2. Ensure all the .geojsons you want to be bounded/clipped are in the same directory as each other.
 3. Input the bounding-box coordinates as instructed.
 4. Run the `Run_CRC_VideoMap_Bounding.bat`, select the directory hosting the .geojsons you want bounded/clipped and choose an output directory.
