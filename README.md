@@ -57,3 +57,8 @@ The script processes each GeoJSON file in the input directory, performing the fo
        - `"isLineDefaults": true`
        - `"isSymbolDefaults": true`
        - `"isTextDefaults": true`
+
+## File Name Clean up
+
+If you wish to have the "_clipped" removed from the file names after the process is complete, consider use the script found here:
+https://github.com/KSanders7070/Rename_File_Name_Prefix_Suffix
