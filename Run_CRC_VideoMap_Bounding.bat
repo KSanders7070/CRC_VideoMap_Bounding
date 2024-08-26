@@ -274,19 +274,16 @@ cls
 
 echo.
 echo.
-echo             ------------
-echo              CONVERTING
-echo             ------------
+echo                        ----------
+echo                         CLIPPING
+echo                        ----------
+echo.
+echo Depending on a few factors, this may take a moment. Please wait...
+echo.
 echo.
 
-rem Process all .geojson files in the input directory
-for %%f in ("%inputDir%\*.geojson") do (
-    set fileName=%%~nf
-    echo !fileName!
-    python CRC_VideoMap_Bounding.py "!inputDir!" "!outputDir!" "!boundingCoords!"
-    echo           --- done
-    echo.
-)
+rem Run the python script and pass in the appropriate arguments
+python CRC_VideoMap_Bounding.py "!inputDir!" "!outputDir!" "!boundingCoords!"
 
 echo.
 echo.
