@@ -188,9 +188,6 @@ echo.
 
 set /p boundingCoords=Enter bounding box coordinates as described above and press Enter: 
 
-set boundingCoords=!boundingCoords:"=!
-set boundingCoords=!boundingCoords: =!
-
 if "!boundingCoords!"=="" (
     echo.
 	echo.
@@ -238,7 +235,7 @@ echo.
 echo Please select the input directory containing all the
 echo .geojson files you want converted.
 echo.
-echo This script will strip ALL .geojson files contained within
+echo This script will clip ALL .geojson files contained within
 echo your selected directory of data outside the Bounding Box
 echo and output them to another file/directory.
 
@@ -261,7 +258,7 @@ echo             -------------------------
 echo              SELECT OUTPUT DIRECTORY
 echo             -------------------------
 echo.
-echo Please select the output directory where all stripped
+echo Please select the output directory where all clipped
 echo .geojson files will be stored.
 
 set outputDir=
@@ -298,7 +295,7 @@ echo                         ------
 echo                          DONE
 echo                         ------
 echo.
-echo Conversion script complete and stripped files saved here:
+echo Conversion script complete and clipped files saved here:
 echo !outputDir!
 echo.
 echo Please check above for any errors that may have been encountered.

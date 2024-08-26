@@ -15,7 +15,7 @@ def process_geojson(input_dir, output_dir, bounding_box):
     for filename in os.listdir(input_dir):
         if filename.endswith('.geojson'):
             input_path = os.path.join(input_dir, filename)
-            output_path = os.path.join(output_dir, filename.replace('.geojson', '_converted.geojson'))
+            output_path = os.path.join(output_dir, filename.replace('.geojson', '_clipped.geojson'))
             
             with open(input_path, 'r') as infile:
                 data = geojson.load(infile)
